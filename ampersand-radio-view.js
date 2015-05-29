@@ -44,7 +44,7 @@ var OneButton = View.extend({
 module.exports = InputView.extend({
     template: [
         '<div class="field field--radio">',
-            '<div class="radio-container"></div>',
+            '<div class="radio-buttons"></div>',
             '<input type="hidden" data-hook="main">',
             '<div data-hook="message-container">',
                 '<div data-hook="message-text" class="alert alert-danger"></div>',
@@ -71,7 +71,7 @@ module.exports = InputView.extend({
                 checked: this.buttons[i].checked,
                 disabled: this.buttons[i].disabled,
                 name: this.name + '-doNotUseDirectly'
-            }), '.radio-container');
+            }), '.radio-buttons');
             if (this.buttons[i].checked) {
                 this.inputValue = this.buttons[i].value;
             }
