@@ -21,18 +21,19 @@ module.exports = FormView.extend({
             new RadioView({
                 label: 'Gender',
                 name: 'gender',
-                value: 'female',
+                buttons: [
+                    {
+                        text: 'Female',
+                        value: 'female',
+                        checked: this.model.gender ? (this.model.gender == 'female') : false
+                    },
+                    {
+                        text: 'Male',
+                        value: 'male',
+                        checked: this.model.gender ? (this.model.gender == 'male') : false
+                    }
+                ],
                 required: false,
-                text: 'Female',
-                checked: this.model.gender ? (this.model.gender == 'female') : false,
-                parent: this
-            }),
-            new RadioView({
-                name: 'gender',
-                value: 'male',
-                required: false,
-                text: 'Male',
-                checked: this.model.gender ? (this.model.gender == 'male') : false,
                 parent: this
             })
         ];

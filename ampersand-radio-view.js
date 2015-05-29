@@ -5,7 +5,7 @@ var _ = require('underscore');
 //an internally used view that is used to draw each radio button
 var OneButton = View.extend({
     template:
-        '<div><input type="radio"><span data-hook="text"></span></div>',
+        '<div><input type="radio"><label data-hook="label"></label><span data-hook="text"></span></div>',
     props: {
         text: ['string', true, ''],
         checked: ['boolean', false, false],
@@ -43,12 +43,12 @@ var OneButton = View.extend({
 
 module.exports = InputView.extend({
     template: [
-        '<div class="form-group"><label data-hook="label"></label>',
-        '<div class="radio-buttons"></div>',
-        '<input type="hidden" data-hook="main">',
-        '<div data-hook="message-container">',
-        '<div data-hook="message-text" class="alert alert-danger"></div>',
-        '</div>',
+        '<div class="field field--radio">',
+            '<div class="radio-container"></div>',
+            '<input type="hidden" data-hook="main">',
+            '<div data-hook="message-container">',
+                '<div data-hook="message-text" class="alert alert-danger"></div>',
+            '</div>',
         '</div>'
     ].join(''),
 
@@ -71,7 +71,7 @@ module.exports = InputView.extend({
                 checked: this.buttons[i].checked,
                 disabled: this.buttons[i].disabled,
                 name: this.name + '-doNotUseDirectly'
-            }), '.radio-buttons');
+            }), '.radio-container');
             if (this.buttons[i].checked) {
                 this.inputValue = this.buttons[i].value;
             }
