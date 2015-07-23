@@ -1,6 +1,6 @@
 var View = require('ampersand-view');
 var InputView = require('ampersand-input-view');
-var extend = require('lodash/object/assign'),
+var extend = require('lodash/object/assign');
 
 //an internally used view that is used to draw each radio button
 var OneButton = View.extend({
