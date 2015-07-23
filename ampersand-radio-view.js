@@ -1,6 +1,6 @@
 var View = require('ampersand-view');
 var InputView = require('ampersand-input-view');
-var _ = require('underscore');
+var extend = require('lodash/object/assign'),
 
 //an internally used view that is used to draw each radio button
 var OneButton = View.extend({
@@ -64,6 +64,7 @@ module.exports = InputView.extend({
 		'<div class="field field--radio">',
 			'<div class="radio-buttons"></div>',
 			'<input type="hidden" data-hook="main">',
+			'<span class="label" data-hook="label"></span>',
 			'<div data-hook="message-container" class="message message-below message-error">',
 				'<p data-hook="message-text"></p>',
 			'</div>',
@@ -71,19 +72,25 @@ module.exports = InputView.extend({
 	].join(''),
 
 	props: {
-		buttons: 'array'
+		buttons: 'array',
+		extraClass: 'string'
 	},
 
+	bindings: extend({}, InputView.prototype.bindings, {
+		'extraClass': {
+			type: 'class'
+		}
+	}),
+
 	initialize: function() {
-		//force the input type to hidden. Doing it here since there is an event on type change
 		this.type = 'hidden';
-		InputView.prototype.initialize.apply(this);
+		InputView.prototype.initialize.apply( this );
 	},
 
 	render: function () {
-		InputView.prototype.render.apply(this);
-		for(var i = 0; i < this.buttons.length; i++){
-			this.renderSubview(new OneButton({
+		InputView.prototype.render.apply( this );
+		for ( var i = 0; i < this.buttons.length; i++ ){
+			this.renderSubview( new OneButton({
 				text: this.buttons[i].text,
 				value: this.buttons[i].value,
 				checked: this.buttons[i].checked,
@@ -91,17 +98,17 @@ module.exports = InputView.extend({
 				name: this.name + '-doNotUseDirectly',
 				parent: this
 			}), '.radio-buttons');
-			if (this.buttons[i].checked) {
+			if ( this.buttons[i].checked ) {
 				this.inputValue = this.buttons[i].value;
 			}
 		}
 	},
 
-	events: _.extend({}, InputView.prototype.events, {
-		'click input[type=radio]': 'radioClickHandler'
+	events: extend({}, InputView.prototype.events, {
+		'click input[type=radio]': '_radioClickHandler'
 	}),
 
-	radioClickHandler: function(e) {
+	_radioClickHandler: function(e) {
 		this.inputValue = e.target.value;
 	}
 });
